@@ -111,7 +111,11 @@ _EMPTY_DIR_PROTECTED_TOP_LEVEL = frozenset({
     # Per-profile user trees bootstrapped by ``profiles.py::_PROFILE_DIRS`` (#112859).
     "workspace", "plans", "home",
     # Kanban owns its own lifecycle (workspaces GC'd at terminal state, attachments live with the task).
-    "kanban"})
+    "kanban",
+    # Per-profile deliverable trees: ``reports/`` (handoff packets, evidence, patches) and
+    # ``scripts/`` (cron/monitor scripts and their regression tests). Their empty subdirs are
+    # never swept either.
+    "reports", "scripts"})
 
 _EMPTY_DIR_SWEEP_PRUNE_DIRS = frozenset({
     ".git", "node_modules", "venv", ".venv", "site-packages", "__pycache__"})
@@ -130,7 +134,13 @@ _NEVER_TRACK_TOP_LEVEL = frozenset({
     "profiles", "backups", "optional-skills", "workspace", "plans", "home",
     # Kanban task attachments/workspaces have their own lifecycle; test_* staging files there are
     # not disposable (#114552).
-    "kanban"})
+    "kanban",
+    # Per-profile deliverable trees: ``reports/`` (handoff packets, evidence, patches) and
+    # ``scripts/`` (cron/monitor scripts and their regression tests). Their file names legitimately
+    # start with ``test_``/``tmp_``; without this, a deliverable written in this turn is classified
+    # ``test`` and deleted by ``quick()`` at the end of the very same session (observed 2026-11-17
+    # in the explorer profile: TRACKED then DELETED minutes apart).
+    "reports", "scripts"})
 
 
 def _is_protected_dir(p: Path) -> bool:

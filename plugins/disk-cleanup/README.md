@@ -50,7 +50,8 @@ Deletion rules (same as the original PR):
 - `$HERMES_HOME/logs/`, `memories/`, `sessions/`, `skills/`, `plugins/`,
   and config files are never tracked
 - User project trees (`workspace/`, `projects/`, `plans/`, `home/`, `patches/`,
-  `skins/`, `themes/`, `contributors/`, `profiles/`, `backups/`) and `kanban/`
+  `skins/`, `themes/`, `contributors/`, `profiles/`, `backups/`), the operator
+  script tree (`scripts/`), the deliverable tree (`reports/`) and `kanban/`
   (task attachments/workspaces) are never tracked or swept, even for files
   named `test_*`/`tmp_*`
 - A tracked *directory* under a protected top level (e.g. `cache/`, which holds
